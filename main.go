@@ -6,6 +6,11 @@ import (
 	"net/http"
 )
 
+type User struct {
+	Name string
+	Age  int
+}
+
 func sayHello(w http.ResponseWriter, r *http.Request) {
 	//解析模板
 	t, err := template.ParseFiles("template/hello.html")
@@ -13,8 +18,13 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	u1 := User{
+		Name: "test",
+		Age:  18,
+	}
+
 	//渲染模板
-	err = t.Execute(w, "test123")
+	err = t.Execute(w, u1)
 	if err != nil {
 		fmt.Printf("render template error: %v", err)
 		return
